@@ -2,38 +2,54 @@ import './App.css';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 
-const Timer = ({label, initialAmount, whenDone}) => {
-  
-}
+const App = ({ interval }) => {
 
-const App = () => {
+  const [state, setState] = useState({
+    countStart: interval,
+    count: interval,
+    notifying: false,
+    running: false,
+  });
 
-  const [rating, setRating] = useState(3);
-  const [count, setCount] = useState(0);
-  const [timer, setTimer] = useState(null);
-  const [running, setRunning] = useState(false);
+  const timerEnd = () => {
+    if (state.notifying) {
+      const _ = new Notification("Time!", {body: "You know what to do."});
+    }
+  }
+
+  const checkPermission = async () => {
+    const permission = await Notification.requestPermission();
+    const result = (permission === "granted");
+    setState((prevState) => ({...prevState, notifying: result}));
+  };
 
   const updateCount = () => {
-    setCount(c => c + 1);
-  }
-
-  const toggleRunning = () => {
-    setRunning((prevRunning) => {
-      if (!prevRunning) {
-        setTimer(setInterval(() => {
-          updateCount();
-        }, 1000));
-      } else {
-        clearInterval(timer);
-      }
-      return !prevRunning;
+    setState((prevState) => {
+      const { count, countStart } = prevState;
+      return {...prevState, count: (count > 0 ? count - 1 : countStart)};
     });
-  }
+  };
+
+  const startTimer = () => {
+    checkPermission();
+    setInterval(() => {
+      updateCount();
+    }, 1000);
+    setState((prevState) => {
+      return {...prevState, running: true};
+    });
+  };
+
+  useEffect(() => {
+    if (state.count === 0) {
+      timerEnd();
+    }
+  }, [state.count]);
+
 
   return (
     <div className="App">
@@ -41,23 +57,17 @@ const App = () => {
         <CardContent>
           <Button 
             variant="contained"
-            onClick={toggleRunning}
+            onClick={startTimer}
+            disabled={state.running}
           >
-            Click Me
+            Start
           </Button>
           <Typography
             variant="h5"
             gutterBottom
           >
-            {count}
+            <span>{state.count} {String(state.notifying)}</span>
           </Typography>
-          <Rating
-            name="simple-controlled"
-            value={rating}
-            onChange={(_, newRating) => {
-              setRating(newRating);
-            }}
-          />
         </CardContent>
       </Card>
     </div>
