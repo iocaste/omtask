@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/omtask/static/css/main.964fdded.css",
-    "main.js": "/omtask/static/js/main.d4450116.js",
+    "main.js": "/omtask/static/js/main.53476354.js",
     "static/js/787.216ea7bb.chunk.js": "/omtask/static/js/787.216ea7bb.chunk.js",
     "index.html": "/omtask/index.html",
     "main.964fdded.css.map": "/omtask/static/css/main.964fdded.css.map",
-    "main.d4450116.js.map": "/omtask/static/js/main.d4450116.js.map",
+    "main.53476354.js.map": "/omtask/static/js/main.53476354.js.map",
     "787.216ea7bb.chunk.js.map": "/omtask/static/js/787.216ea7bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.964fdded.css",
-    "static/js/main.d4450116.js"
+    "static/js/main.53476354.js"
   ]
 }
