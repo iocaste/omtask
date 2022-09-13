@@ -43,7 +43,7 @@ const App = () => {
             variant="contained"
             onClick={toggleRunning}
           >
-            Click!
+            Click Me
           </Button>
           <Typography
             variant="h5"
